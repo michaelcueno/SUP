@@ -26,19 +26,19 @@ public class SUP {
 			Scanner lineScanner = new Scanner(line);
 			
 			if(lineScanner.hasNext()){
-
+				Vertex<String> v = null;
 				name = lineScanner.next();
 				if(graph.contains(name)){
 					if(graph.get(name).visited){
-						Vertex<String> v = graph.get(name);
+						v = graph.get(name);
 						v.visited = false;
 					}else{
 						System.out.println("input file contains repeated vertice names");
 						System.exit(0);
 					}
-				}else
-					Vertex<String> v = new Vertex<String>(name);
-
+				}else{
+					v = new Vertex<String>(name);
+				}
 				if(lineScanner.hasNext()){
 					if(lineScanner.next().equals(":")){
 					
@@ -57,19 +57,18 @@ public class SUP {
 					}
 				}
 				graph.add(name, v);
+				
 			}
 		}
 	
-		System.out.print("Vertices: ");	
-		for(String vert : graph.getKeys()){
-			System.out.print(vert + " ");
-		}
+		System.out.print("Graph: " + graph);	
+
 		System.out.println();
 		System.out.println("Start: ");
 		String start = keyboard.next();
 		System.out.println("End: ");
 		String end = keyboard.next();
-
+	
 		graph.setDistances(start);
 		System.out.println("dist using setDistances() 'naive approach': " + graph.get(end).getDist());
 		graph.reset();

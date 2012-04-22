@@ -233,8 +233,11 @@ public class Graph <T> {
 		String result = "";
 		for( Vertex<T> v : map.values() ){
 			result += " " + v.getValue();
-			result += " : " ;
-			result += v.getDist();
+			result += ": [" ;
+			for( Vertex<T> w : v.dependencies){
+				result += w.getValue() +"," ;
+			}
+			result += "]";
 		} 
 		return result;
 	}
