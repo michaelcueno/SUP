@@ -28,18 +28,31 @@ public class SUP {
 			if(lineScanner.hasNext()){
 
 				name = lineScanner.next();
-				Vertex<String> v = new Vertex<String>(name);
 				if(graph.contains(name)){
-					System.out.println("input file contains repeated vertice names");
-					System.exit(0);
-				}
+					if(graph.get(name).visited){
+						Vertex<String> v = graph.get(name);
+						v.visited = false;
+					}else{
+						System.out.println("input file contains repeated vertice names");
+						System.exit(0);
+					}
+				}else
+					Vertex<String> v = new Vertex<String>(name);
 
 				if(lineScanner.hasNext()){
 					if(lineScanner.next().equals(":")){
 					
 						while(lineScanner.hasNext()){
 							String vert = lineScanner.next();
-							v.addAdj( vert );
+							if(graph.contains(vert)){
+								Vertex<String> w = graph.get(vert); 
+								v.addAdj( w );
+							}else{
+								Vertex<String> w = new Vertex<String>(vert);
+								w.visited = true; //Flag to indicate this vertex appears in the graph as a dependency
+								graph.add(vert, w);
+								v.addAdj(w);
+							}
 						}
 					}
 				}

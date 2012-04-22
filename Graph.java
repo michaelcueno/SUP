@@ -39,12 +39,9 @@ public class Graph <T> {
 
 		for( Vertex<T> v : map.values() ){
 			if(!v.isBasic()){
-				for( T name : v.dependencies ){
-					if( map.containsKey(name)){
-						
-						Vertex<T> d = map.get(name);
-						d.indegree++;
-					}
+				for( Vertex<T> w : v.dependencies ){
+					w.indegree++;
+					
 				}
 			}
 		}	
@@ -67,8 +64,7 @@ public class Graph <T> {
 			for( Vertex<T> v : map.values() ) {
 				if( v.dist == i && !v.visited){
 					v.visited = true;
-					for( T adj : v.dependencies){
-						Vertex<T> w = map.get(adj);
+					for( Vertex<T> w : v.dependencies){
 						if(w.dist == FLAG){
 							w.setDist(i+1);
 							w.path = v.value;
@@ -99,9 +95,8 @@ public class Graph <T> {
 		while(q.size() != 0 ){
 			
 			v = q.poll();
-			for( T value : v.dependencies ){
+			for( Vertex<T> w : v.dependencies ){
 
-				Vertex<T> w = map.get(value);
 				if(w.dist == FLAG){
 					w.setDist(v.dist + 1);
 					w.path = v.getValue();
@@ -128,11 +123,10 @@ public class Graph <T> {
 			
 			Vertex<T> v = (Vertex<T>)s.pop();
 			count++;
-			for( T n : v.dependencies ){
-				Vertex<T> d = map.get(n);
-				
-				if(--d.indegree == 0)
-					s.push(d);
+			for( Vertex<T> w : v.dependencies ){
+
+				if(--w.indegree == 0)
+					s.push(w);
 			}	
 		}
 		
@@ -205,10 +199,9 @@ public class Graph <T> {
 			}else {
 				if(!v.visited){
 					boolean upToDate = true;
-					for( T n : v.dependencies ){
-						Vertex<T> d = map.get(n);
-						update(d.getValue());
-						if( d.timeStamp > v.timeStamp ){
+					for( Vertex<T> w : v.dependencies ){
+						update(w.getValue());
+						if( w.timeStamp > v.timeStamp ){
 							upToDate = false;
 						}
 					}

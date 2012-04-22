@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Vertex<T>{
 	
 	T value;
-	public ArrayList<T> dependencies;
+	public ArrayList<Vertex<T>> dependencies;
 	public boolean visited;
 	int dist;
 	T path;
@@ -11,7 +11,7 @@ public class Vertex<T>{
 	int timeStamp;
 
 	public Vertex(T value){
-		dependencies = new ArrayList<T>();
+		dependencies = new ArrayList<Vertex<T>>();
 		this.value = value;
 		this.dist = 0;
 		this.indegree = 0;
@@ -27,7 +27,7 @@ public class Vertex<T>{
 		return dist;
 	}
 
-	public void addAdj(T adj){
+	public void addAdj(Vertex<T> adj){
 
 		dependencies.add(adj);
 	}
